@@ -11,4 +11,5 @@ urlpatterns = [
     path('images-to-pdf/', views.images_to_pdf, name='images_to_pdf'),
     path('rotate/', views.rotate_pdf, name='rotate_pdf'),
     path('download/<str:filename>/', views.download_file, name='download_file'),
+    path('pdf-to-word/', views.pdf_to_word, name='pdf_to_word'),
 ]

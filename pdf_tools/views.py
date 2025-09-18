@@ -14,6 +14,7 @@ from PIL import Image
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import json
+from pdf2docx import Converter
 
 def home(request):
     return render(request, 'pdf_tools/home.html')
@@ -318,3 +319,39 @@ def download_file(request, filename):
             return HttpResponse('Archivo no encontrado', status=404)
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def pdf_to_word(request):
+    try:
+        file = request.FILES.get('file')
+
+        if not file or not file.name.endswith('.pdf'):
+            return JsonResponse({'error': 'Se requiere un archivo PDF válido'}, status=400)
+
+        # Guardar PDF temporalmente
+        temp_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+        for chunk in file.chunks():
+            temp_pdf.write(chunk)
+        temp_pdf.close()
+
+        # Convertir PDF a DOCX en memoria
+        output_filename = file.name.replace('.pdf', '.docx')
+        output_path = f'output/{output_filename}'
+
+        buffer = BytesIO()
+        cv = Converter(temp_pdf.name)
+        cv.convert(buffer, start=0, end=None)
+        cv.close()
+
+        buffer.seek(0)
+        default_storage.save(output_path, ContentFile(buffer.getvalue()))
+
+        return JsonResponse({
+            'success': True,
+            'download_url': f'/download/{output_filename}/',
+            'filename': output_filename
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
