@@ -1,0 +1,302 @@
+{% extends 'pdf_tools/base.html' %}
+
+{% block title %}Tools PDF - Herramientas PDF Gratuitas{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-primary via-blue-600 to-secondary text-white py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 class="text-5xl font-bold mb-6">Herramientas PDF Gratuitas</h1>
+        <p class="text-xl opacity-90 max-w-3xl mx-auto mb-8">
+            Todas las herramientas que necesitas para trabajar con PDFs de forma rápida, sencilla y completamente gratis.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <span class="px-4 py-2 bg-white/20 rounded-full text-sm backdrop-blur-sm">✨ 100% Gratuito</span>
+            <span class="px-4 py-2 bg-white/20 rounded-full text-sm backdrop-blur-sm">🔒 Seguro y Privado</span>
+            <span class="px-4 py-2 bg-white/20 rounded-full text-sm backdrop-blur-sm">⚡ Procesamiento Rápido</span>
+        </div>
+    </div>
+</section>
+
+<!-- Tools Grid -->
+<section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Elige tu herramienta PDF</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Selecciona la herramienta que necesitas para tu documento PDF</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Merge PDFs -->
+            <div class="tool-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 cursor-pointer group"
+                 onclick="showTool('merge')">
+                <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-lg mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center">Fusionar PDFs</h3>
+                <p class="text-gray-600 text-center">Combina múltiples archivos PDF en uno solo</p>
+            </div>
+
+            <!-- Split PDF -->
+            <div class="tool-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 cursor-pointer group"
+                 onclick="showTool('split')">
+                <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center">Dividir PDF</h3>
+                <p class="text-gray-600 text-center">Extrae páginas individuales de un archivo PDF</p>
+            </div>
+
+            <!-- Compress PDF -->
+            <div class="tool-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 cursor-pointer group"
+                 onclick="showTool('compress')">
+                <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-lg mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center">Comprimir PDF</h3>
+                <p class="text-gray-600 text-center">Reduce el tamaño de tus archivos PDF</p>
+            </div>
+
+            <!-- Images to PDF -->
+            <div class="tool-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 cursor-pointer group"
+                 onclick="showTool('images')">
+                <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center">Imágenes a PDF</h3>
+                <p class="text-gray-600 text-center">Convierte imágenes en un documento PDF</p>
+            </div>
+
+            <!-- Rotate PDF -->
+            <div class="tool-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-6 cursor-pointer group"
+                 onclick="showTool('rotate')">
+                <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2 text-center">Rotar PDF</h3>
+                <p class="text-gray-600 text-center">Rota las páginas de tu documento PDF</p>
+            </div>
+
+            <!-- More Tools Coming -->
+            <div class="bg-white rounded-xl shadow-md p-6 opacity-60">
+                <div class="flex items-center justify-center w-16 h-16 bg-gray-300 rounded-lg mb-4 mx-auto">
+                    <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-500 mb-2 text-center">Más herramientas</h3>
+                <p class="text-gray-400 text-center">Próximamente más funcionalidades</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tool Modals -->
+{% include 'pdf_tools/modals.html' %}
+
+<!-- Features Section -->
+<section class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">¿Por qué elegirnos?</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Seguro y Privado</h3>
+                <p class="text-gray-600">Tus archivos se procesan localmente y se eliminan automáticamente</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Rápido y Eficiente</h3>
+                <p class="text-gray-600">Procesa tus PDFs en segundos con nuestra tecnología optimizada</p>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Completamente Gratuito</h3>
+                <p class="text-gray-600">Todas las herramientas están disponibles sin costo y sin registros</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showTool(tool) {
+    document.getElementById(`${tool}-modal`).classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function hideModal(modalId) {
+    document.getElementById(modalId).classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+// File upload handling
+function handleFileUpload(input, tool) {
+    console.log('handleFileUpload called with tool:', tool);
+    const files = input.files;
+    const fileList = document.getElementById(`${tool}-file-list`);
+    console.log('Files selected:', files.length);
+    console.log('File list element found:', !!fileList);
+    
+    fileList.innerHTML = '';
+    
+    Array.from(files).forEach((file, index) => {
+        const fileItem = document.createElement('div');
+        fileItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg';
+        fileItem.innerHTML = `
+            <div class="flex items-center space-x-3">
+                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span class="text-sm text-gray-700">${file.name}</span>
+            </div>
+            <span class="text-xs text-gray-500">${(file.size / 1024 / 1024).toFixed(2)} MB</span>
+        `;
+        fileList.appendChild(fileItem);
+    });
+    
+    if (files.length > 0) {
+        const processBtn = document.getElementById(`${tool}-process-btn`);
+        console.log('Process button found:', !!processBtn);
+        if (processBtn) {
+            console.log('Button onclick attribute:', processBtn.getAttribute('onclick'));
+            processBtn.disabled = false;
+            processBtn.className = 'w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200';
+            console.log('Button enabled and styled');
+        }
+    }
+}
+
+// Process files
+async function processFiles(tool) {
+    console.log('Processing tool:', tool);
+    const form = document.getElementById(`${tool}-form`);
+    const formData = new FormData(form);
+    const processBtn = document.getElementById(`${tool}-process-btn`);
+    const loadingDiv = document.getElementById(`${tool}-loading`);
+    const resultDiv = document.getElementById(`${tool}-result`);
+    
+    console.log('Form found:', !!form);
+    console.log('Process button found:', !!processBtn);
+    console.log('Loading div found:', !!loadingDiv);
+    console.log('Result div found:', !!resultDiv);
+    
+    processBtn.disabled = true;
+    processBtn.textContent = 'Procesando...';
+    loadingDiv.classList.remove('hidden');
+    resultDiv.classList.add('hidden');
+    
+    try {
+        console.log('Sending request to:', `/${tool}/`);
+        const response = await fetch(`/${tool}/`, {
+            method: 'POST',
+            body: formData,
+        });
+        
+        console.log('Response status:', response.status);
+        const result = await response.json();
+        console.log('Response result:', result);
+        
+        if (result.success) {
+            resultDiv.classList.remove('hidden');
+            
+            if (tool === 'split') {
+                const downloadList = document.getElementById(`${tool}-downloads`);
+                if (downloadList) {
+                    downloadList.innerHTML = '';
+                    if (result.files && Array.isArray(result.files)) {
+                        result.files.forEach(file => {
+                            const downloadItem = document.createElement('a');
+                            downloadItem.href = file.download_url;
+                            downloadItem.className = 'flex items-center justify-between p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200';
+                            downloadItem.innerHTML = `
+                                <div class="flex items-center space-x-3">
+                                    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m-6 4h8a2 2 0 002-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                    <span class="text-sm text-gray-700">${file.filename}</span>
+                                </div>
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m-6 4h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            `;
+                            downloadList.appendChild(downloadItem);
+                        });
+                    } else if (result.download_url) {
+                        const downloadItem = document.createElement('a');
+                        downloadItem.href = result.download_url;
+                        downloadItem.className = 'flex items-center justify-between p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200';
+                        downloadItem.innerHTML = `
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m-6 4h8a2 2 0 002-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                </svg>
+                                <span class="text-sm text-gray-700">${result.filename || 'pages.pdf'}</span>
+                            </div>
+                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-4-4m4 4l4-4m-6 4h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        `;
+                        downloadList.appendChild(downloadItem);
+                    }
+                }
+            } else {
+                // Para otras herramientas (archivo único)
+                const downloadBtn = document.getElementById(`${tool}-download-btn`);
+                if (downloadBtn && result.download_url) {
+                    downloadBtn.href = result.download_url;
+                    downloadBtn.classList.remove('hidden');
+                }
+            }
+        } else {
+            console.error('Server error:', result.error);
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        console.error('Request error:', error);
+        alert('Error al procesar el archivo: ' + error.message);
+    } finally {
+        loadingDiv.classList.add('hidden');
+        processBtn.disabled = false;
+        processBtn.textContent = 'Procesar';
+        processBtn.className = 'w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-200';
+    }
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+}
+</script>
+{% endblock %}

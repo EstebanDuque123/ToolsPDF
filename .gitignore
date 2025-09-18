@@ -1,0 +1,71 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Archivos de migraciones (opcional, si no quieres versionarlas)
+*/migrations/*.py
+!*/migrations/__init__.py
+
+# Entornos virtuales
+venv/
+.env/
+ENV/
+env/
+.venv/
+
+# Archivos de configuración local / secretos
+*.sqlite3
+*.log
+*.pot
+*.pyc
+db.sqlite3
+.env.local
+.env.*.local
+
+# Archivos de Django
+staticfiles/
+media/
+static/
+*.mo
+
+# Archivos de IDEs / editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
