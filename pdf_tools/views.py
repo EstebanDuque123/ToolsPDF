@@ -15,6 +15,8 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 import json
 from pdf2docx import Converter
+import pdfplumber
+import pandas as pd
 
 def home(request):
     return render(request, 'pdf_tools/home.html')
@@ -343,6 +345,55 @@ def pdf_to_word(request):
         cv = Converter(temp_pdf.name)
         cv.convert(buffer, start=0, end=None)
         cv.close()
+
+        buffer.seek(0)
+        default_storage.save(output_path, ContentFile(buffer.getvalue()))
+
+        return JsonResponse({
+            'success': True,
+            'download_url': f'/download/{output_filename}/',
+            'filename': output_filename
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+    
+@csrf_exempt
+@require_http_methods(["POST"])
+def pdf_to_excel(request):
+    try:
+        file = request.FILES.get('file')
+
+        if not file or not file.name.endswith('.pdf'):
+            return JsonResponse({'error': 'Se requiere un archivo PDF válido'}, status=400)
+
+        # Guardar PDF temporalmente
+        temp_pdf = tempfile.NamedTemporaryFile(delete=False, suffix=".pdf")
+        for chunk in file.chunks():
+            temp_pdf.write(chunk)
+        temp_pdf.close()
+
+        # Extraer tablas
+        all_tables = []
+        with pdfplumber.open(temp_pdf.name) as pdf:
+            for page in pdf.pages:
+                tables = page.extract_tables()
+                for table in tables:
+                    df = pd.DataFrame(table)
+                    all_tables.append(df)
+
+        if not all_tables:
+            return JsonResponse({'error': 'No se encontraron tablas en el PDF'}, status=400)
+
+        # Consolidar en un solo Excel
+        buffer = BytesIO()
+        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+            for i, df in enumerate(all_tables, start=1):
+                df.to_excel(writer, index=False, header=False, sheet_name=f"Tabla_{i}")
+
+        # Guardar en output/
+        output_filename = file.name.replace('.pdf', '.xlsx')
+        output_path = f'output/{output_filename}'
 
         buffer.seek(0)
         default_storage.save(output_path, ContentFile(buffer.getvalue()))
