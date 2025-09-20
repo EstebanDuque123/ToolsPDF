@@ -17,6 +17,7 @@ import json
 from pdf2docx import Converter
 import pdfplumber
 import pandas as pd
+from PyPDF2 import PdfReader, PdfWriter
 
 def home(request):
     return render(request, 'pdf_tools/home.html')
@@ -406,3 +407,61 @@ def pdf_to_excel(request):
 
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def remove_pdf_password(request):
+    try:
+        file = request.FILES.get('file')
+        password = request.POST.get('password', '')
+
+        if not file or not file.name.endswith('.pdf'):
+            return JsonResponse({'error': 'Se requiere un archivo PDF válido'}, status=400)
+
+        # Leer el PDF en memoria
+        file.seek(0)
+        reader = PdfReader(file)
+
+        # Verificar si está cifrado
+        if reader.is_encrypted:
+            if not reader.decrypt(password):
+                return JsonResponse({'error': 'La contraseña es incorrecta o no se pudo descifrar el PDF'}, status=400)
+
+        writer = PdfWriter()
+        for page in reader.pages:
+            writer.add_page(page)
+
+        output_filename = f'unlocked_{file.name}'
+        output_path = f'output/{output_filename}'
+
+        buffer = BytesIO()
+        writer.write(buffer)
+        buffer.seek(0)
+
+        default_storage.save(output_path, ContentFile(buffer.getvalue()))
+
+        return JsonResponse({
+            'success': True,
+            'download_url': f'/download/{output_filename}/',
+            'filename': output_filename
+        })
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+def download_file(request, filename):
+    try:
+        file_path = f'output/{filename}'
+        if default_storage.exists(file_path):
+            response = FileResponse(
+                default_storage.open(file_path, 'rb'),
+                as_attachment=True,
+                filename=filename
+            )
+            return response
+        else:
+            return HttpResponse('Archivo no encontrado', status=404)
+    except Exception as e:
+        return HttpResponse(f'Error: {str(e)}', status=500)
