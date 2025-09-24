@@ -15,4 +15,5 @@ urlpatterns = [
     path('pdf-to-excel/', views.pdf_to_excel, name='pdf_to_excel'),
     path("remove-pdf-password/", views.remove_pdf_password, name="remove_pdf_password"),
     path("download/<str:filename>/", views.download_file, name="download_file"),
+    path("pdf-to-ppt/", views.pdf_to_ppt, name="pdf_to_ppt"),
 ]

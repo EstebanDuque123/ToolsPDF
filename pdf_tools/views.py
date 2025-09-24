@@ -18,6 +18,8 @@ from pdf2docx import Converter
 import pdfplumber
 import pandas as pd
 from PyPDF2 import PdfReader, PdfWriter
+from pptx import Presentation
+from pptx.util import Inches, Pt
 
 def home(request):
     return render(request, 'pdf_tools/home.html')
@@ -465,3 +467,39 @@ def download_file(request, filename):
             return HttpResponse('Archivo no encontrado', status=404)
     except Exception as e:
         return HttpResponse(f'Error: {str(e)}', status=500)
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def pdf_to_ppt(request):
+    try:
+        file = request.FILES.get("file")
+        if not file or not file.name.endswith(".pdf"):
+            return JsonResponse({"error": "Se requiere un archivo PDF válido"}, status=400)
+
+        reader = PdfReader(file)
+        prs = Presentation()
+
+        for page in reader.pages:
+            slide_layout = prs.slide_layouts[5]  # blank slide
+            slide = prs.slides.add_slide(slide_layout)
+            text = page.extract_text() or ""
+            textbox = slide.shapes.add_textbox(Inches(1), Inches(1), Inches(8), Inches(5))
+            tf = textbox.text_frame
+            tf.text = text
+
+        output_filename = f'converted_{file.name}.pptx'
+        output_path = f'output/{output_filename}'
+
+        buffer = BytesIO()
+        prs.save(buffer)
+        buffer.seek(0)
+
+        default_storage.save(output_path, ContentFile(buffer.getvalue()))
+
+        return JsonResponse({
+            "success": True,
+            "download_url": f"/download/{output_filename}/",
+            "filename": output_filename
+        })
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
